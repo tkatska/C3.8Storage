@@ -1,0 +1,62 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>C3.8</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<div>
+    <textarea style="width:200px; height: 60px;" id="area" placeholder="Напишите сообщение здесь"
+        onChange='saveNewValue()'></textarea>
+    <br>
+    <div id="result"></div>
+    <br>
+    <button onclick="localStorage.removeItem('area'); area.value=''">Очистить</button>
+    <br>
+</div>
+<div>
+    <input type="checkbox" name="call" id="one" value="one" onclick="setCookie(this);"> не звонить
+    мне;<br>
+    <input type="checkbox" name="agree" value="two" onclick="setCookie(this);"> я прочитал и согласен с
+    правилами пользования сервисом;<br>
+    <input type="checkbox" name="choose" value="three" onclick="setCookie(this);"> я не выбираю эту галочку;<br>
+    <input type="checkbox" name="confirm" value="four" onclick="setCookie(this);"> я подтверждаю, что свобода в
+    интернете — это возможность
+    выбирать
+    галочки;<br>
+    <input type="checkbox" name="older" value="five" onclick="setCookie(this);"> мне больше 12 лет;<br>
+    <input type="checkbox" name="correct" value="six" onclick="setCookie(this);"> это задание выполнено правильно;<br>
+</div>
+<script>
+    if (localStorage.getItem('area')) {
+        document.getElementById('area').style.display = "none";
+        document.getElementById("result").innerHTML = "Ваш город —" + localStorage.getItem('area');
+    } else {
+        area.oninput = () => {
+            localStorage.setItem('area', area.value);
+        }
+    }
+
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i].type == 'checkbox') {
+            if (localStorage.getItem(inputs[i].value)) {
+                inputs[i].checked = true;
+                inputs[i].disabled = true;
+            }
+        }
+    }
+
+    let setCookie = (me) => {
+        console.log(me.value, me.checked);
+        if (me.checked) {
+            localStorage.setItem(me.value, me.checked)
+        } else {
+            localStorage.removeItem(me.value)
+        }
+    }
+</script>
+
+</html>
